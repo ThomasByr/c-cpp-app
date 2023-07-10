@@ -18,4 +18,4 @@ cd ..
 
 # building the project
 printf "\n\033[96m> tests done : building...\033[0m\n\n"
-make clean && make -j20 generic
+make clean && make generic
