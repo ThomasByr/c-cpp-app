@@ -7,6 +7,9 @@
 [![GitHub latest commit](https://badgen.net/github/last-commit/ThomasByr/c-cpp-app)](https://gitHub.com/ThomasByr/c-cpp-app/commit/)
 [![Maintenance](https://img.shields.io/badge/maintained%3F-yes-green.svg)](https://GitHub.com/ThomasByr/c-cpp-app/graphs/commit-activity)
 
+[![C/C++ CI](https://github.com/ThomasByr/c-cpp-app/actions/workflows/c-cpp.yml/badge.svg)](https://github.com/ThomasByr/c-cpp-app/actions/workflows/c-cpp.yml)
+[![CodeQL](https://github.com/ThomasByr/c-cpp-app/actions/workflows/codeql.yml/badge.svg)](https://github.com/ThomasByr/c-cpp-app/actions/workflows/codeql.yml)
+[![Publish](https://github.com/ThomasByr/c-cpp-app/actions/workflows/publish.yml/badge.svg)](https://github.com/ThomasByr/c-cpp-app/actions/workflows/publish.yml)
 [![GitHub version](https://badge.fury.io/gh/ThomasByr%2Fc-cpp-app.svg)](https://github.com/ThomasByr/c-cpp-app)
 [![Author](https://img.shields.io/badge/author-@ThomasByr-blue)](https://github.com/ThomasByr)
 
