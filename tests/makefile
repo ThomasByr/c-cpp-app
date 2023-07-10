@@ -43,6 +43,7 @@ cov: clean tests
 	genhtml -o report -t "Coverage" report.info
 
 check: clean tests
+	mkdir -p $(OBJDIR)
 	valgrind --leak-check=full --show-leak-kinds=all --vgdb=full -s ./$(PATH_TO_EXE)
 	make clean > /dev/null 2>&1
 
