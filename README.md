@@ -28,14 +28,14 @@ Like this template ? We have other templates ready for you ⭐ !
 
 ## ✏️ Setup
 
-This repository is a template for a python app. It is meant to be used as a starting point for any python app. As such, this document is not meant to be _entirely_ read as is, but rather to be used as a base for your own documentation. Nevertheless, you can still find usefull information here since it is a great way to see how the template is used. You will still need to do some (minor) work when using this template - like changing the name of the app, the name of the author, etc. - but it should be fairly easy to do.
+This repository is a template for a C/C++ app. It is meant to be used as a starting point for any python app. As such, this document is not meant to be _entirely_ read as is, but rather to be used as a base for your own documentation. Nevertheless, you can still find usefull information here since it is a great way to see how the template is used. You will still need to do some (minor) work when using this template - like changing the name of the app, the name of the author, etc. - but it should be fairly easy to do.
 
 > <picture>
 >   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/light-theme/info.svg">
 >   <img alt="Info" src="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/dark-theme/info.svg">
 > </picture><br>
 >
-> Please note we do not officially support Windows or MacOS, but we do provide some instructions for those who want to use it on these platforms.
+> Please note we do not officially support Windows or MacOS. Windows users should use wls2 and MacOS users should use a virtual machine. We do not provide support for these platforms.
 
 First, [🔗 generate](https://github.com/ThomasByr/c-cpp-app/generate) a new repository from this template. Then, clone it and `cd` into it :
 
