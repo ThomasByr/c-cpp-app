@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Og -std=gnu++17 -Wpedantic -fprofile-arcs -ftest-coverage -Wall -Wextra -Werror -DDEBUG -g -ggdb
+CFLAGS = -Og -std=gnu++17 -Wpedantic -Wall -Wextra -Werror -DDEBUG -g -ggdb
 LDLIBS = -pthread
 
 LEXYACC_PATH = ../gen
@@ -37,6 +37,7 @@ OBJECTS      = $(filter-out $(LEXOBJ) $(YACCOBJ), $(OBJECTS1))
 
 all: check
 
+cov: CFLAGS += -fprofile-arcs -ftest-coverage
 cov: clean tests
 	valgrind --leak-check=full -q ./$(PATH_TO_EXE)
 	lcov -d obj -c -o report.info
@@ -79,7 +80,6 @@ $(OBJDIR)/$(TARGET).o: $(TARGET).$(FILEXT)
 .PHONY: clean
 clean:
 	rm -rf $(OBJDIR)/*
-	rm -f *.gcno
 	rm -f $(PATH_TO_EXE)
 	rm -f $(LEXC)
 	rm -f $(YACCC) $(YACCC:.c=.h) $(YACCC:.c=.output)
