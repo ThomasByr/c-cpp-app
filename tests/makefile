@@ -1,6 +1,6 @@
 CC = g++
 
-CFLAGS = -Og -std=gnu++17 -Wpedantic -Wall -Wextra -Werror -DDEBUG -g -ggdb
+CFLAGS = -Og -pipe -std=gnu++17 -Wpedantic -Wall -Wextra -Werror -DDEBUG -g -ggdb
 LDLIBS = -pthread
 
 LEXYACC_PATH = ../gen
@@ -74,6 +74,7 @@ $(YACCOBJ): $(OBJDIR)/%.o : $(SRCDIR)/%.$(FILEXT) $(INCLUDES) $(YACCC)
 	$(CC) -o $@ -c $< $(CFLAGS) -isystem$(INCLUDE_PATH) -isystem$(LIB_PATH)
 
 $(OBJDIR)/$(TARGET).o: $(TARGET).$(FILEXT)
+	mkdir -p $(OBJDIR)
 	$(CC) -o $@ -c $< $(CFLAGS) -isystem$(INCLUDE_PATH) -isystem$(LIB_PATH)
 
 
