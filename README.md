@@ -85,7 +85,7 @@ make run[-debug|-release ]
 
 ## 👩‍🏫 Usage
 
-In this section, we generally present the app, put a nice screenshot of the GUI - if any, or the CLI, and explain how to use it. The [src/main.cpp](src/main.cpp) file is the entry point of the app. It contains already contains an example of a CLI app. You can use it as a starting point for your own app. For graphical interfaces, we recommend using [Qt](https://www.qt.io/).
+In this section, we generally present the app, put a nice screenshot of the GUI - if any, or the CLI, and explain how to use it. The [src/main.cpp](src/main.cpp) file is the entry point of the app. It already contains an example of a CLI app. You can use it as a starting point for your own app. For graphical interfaces, we recommend using [Qt](https://www.qt.io/).
 
 We also provide premade config files for linting, testing and formating purposes. Please make sure you have the required dependencies installed before running the commands below. Of course you can tweak these files to match your needs, but they should be good enough for most use cases.
 
@@ -127,7 +127,7 @@ python scripts/changelog.py
 
 If you ever want to contribute, either request the contributor status, or, more manually, fork the repo and make a pull request !
 
-We are using [yapf](https://github.com/google/yapf) to format the code, so make sure you have it installed and run :
+We are using [clang-format](https://clang.llvm.org/docs/ClangFormat.html) to format the code, so make sure you have it installed and run :
 
 ```bash
 make format
