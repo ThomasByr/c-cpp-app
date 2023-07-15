@@ -1,4 +1,37 @@
 
+//! C/C++ App GitHub Template
+//!
+//! Copyright (c) 2023, ThomasByr.
+//! AGPL-3.0-or-later (https://www.gnu.org/licenses/agpl-3.0.en.html)
+//! All rights reserved.
+//!
+//! Redistribution and use in source and binary forms, with or without
+//! modification, are permitted provided that the following conditions are met:
+//!
+//! * Redistributions of source code must retain the above copyright notice,
+//!   this list of conditions and the following disclaimer.
+//!
+//! * Redistributions in binary form must reproduce the above copyright notice,
+//!   this list of conditions and the following disclaimer in the documentation
+//!   and/or other materials provided with the distribution.
+//!
+//! * Neither the name of this software's authors nor the names of its
+//!   contributors may be used to endorse or promote products derived from
+//!   this software without specific prior written permission.
+//!
+//! This program is free software: you can redistribute it and/or modify
+//! it under the terms of the GNU Affero General Public License as published by
+//! the Free Software Foundation, either version 3 of the License, or
+//! (at your option) any later version.
+//!
+//! This program is distributed in the hope that it will be useful,
+//! but WITHOUT ANY WARRANTY; without even the implied warranty of
+//! MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+//! GNU Affero General Public License for more details.
+//!
+//! You should have received a copy of the GNU Affero General Public License
+//! along with this program. If not, see <http://www.gnu.org/licenses/>.
+
 #ifndef __io_ini_H__
 #define __io_ini_H__
 
@@ -39,7 +72,7 @@ inline void trim(std::string &str) {
 
 /* Conversion Functors */
 
-inline bool strToLong(const std::string &value, long &result) {
+inline bool str_to_long(const std::string &value, long &result) {
   char *endptr;
   // check if decimal
   result = std::strtol(value.c_str(), &endptr, 10);
@@ -54,7 +87,7 @@ inline bool strToLong(const std::string &value, long &result) {
   return false;
 }
 
-inline bool strToULong(const std::string &value, unsigned long &result) {
+inline bool str_to_ulong(const std::string &value, unsigned long &result) {
   char *endptr;
   // check if decimal
   result = std::strtoul(value.c_str(), &endptr, 10);
@@ -114,7 +147,7 @@ template <> struct Convert<unsigned char> {
 template <> struct Convert<short> {
   void decode(const std::string &value, short &result) {
     long tmp;
-    if (!strToLong(value, tmp))
+    if (!str_to_long(value, tmp))
       throw std::invalid_argument("field is not a short");
     result = static_cast<short>(tmp);
   }
@@ -129,7 +162,7 @@ template <> struct Convert<short> {
 template <> struct Convert<unsigned short> {
   void decode(const std::string &value, unsigned short &result) {
     unsigned long tmp;
-    if (!strToULong(value, tmp))
+    if (!str_to_ulong(value, tmp))
       throw std::invalid_argument("field is not an unsigned short");
     result = static_cast<unsigned short>(tmp);
   }
@@ -144,7 +177,7 @@ template <> struct Convert<unsigned short> {
 template <> struct Convert<int> {
   void decode(const std::string &value, int &result) {
     long tmp;
-    if (!strToLong(value, tmp))
+    if (!str_to_long(value, tmp))
       throw std::invalid_argument("field is not an int");
     result = static_cast<int>(tmp);
   }
@@ -159,7 +192,7 @@ template <> struct Convert<int> {
 template <> struct Convert<unsigned int> {
   void decode(const std::string &value, unsigned int &result) {
     unsigned long tmp;
-    if (!strToULong(value, tmp))
+    if (!str_to_ulong(value, tmp))
       throw std::invalid_argument("field is not an unsigned int");
     result = static_cast<unsigned int>(tmp);
   }
@@ -173,7 +206,7 @@ template <> struct Convert<unsigned int> {
 
 template <> struct Convert<long> {
   void decode(const std::string &value, long &result) {
-    if (!strToLong(value, result))
+    if (!str_to_long(value, result))
       throw std::invalid_argument("field is not a long");
   }
 
@@ -186,7 +219,7 @@ template <> struct Convert<long> {
 
 template <> struct Convert<unsigned long> {
   void decode(const std::string &value, unsigned long &result) {
-    if (!strToULong(value, result))
+    if (!str_to_ulong(value, result))
       throw std::invalid_argument("field is not an unsigned long");
   }
 
@@ -305,7 +338,7 @@ private:
   std::vector<std::string> commentPrefixes_ = {"#", ";"};
   bool multiLineValues_ = false;
 
-  void eraseComment(const std::string &commentPrefix, std::string &str,
+  void erase_comment(const std::string &commentPrefix, std::string &str,
                     std::string::size_type startpos = 0) {
     size_t prefixpos = str.find(commentPrefix, startpos);
     if (std::string::npos == prefixpos) return;
@@ -314,15 +347,15 @@ private:
       // The comment prefix is escaped, so just delete the escape char
       // and keep erasing after the comment prefix
       str.erase(prefixpos - 1, 1);
-      eraseComment(commentPrefix, str, prefixpos - 1 + commentPrefix.size());
+      erase_comment(commentPrefix, str, prefixpos - 1 + commentPrefix.size());
     } else {
       str.erase(prefixpos);
     }
   }
 
-  void eraseComments(std::string &str) {
+  void erase_comments(std::string &str) {
     for (const std::string &commentPrefix : commentPrefixes_)
-      eraseComment(commentPrefix, str);
+      erase_comment(commentPrefix, str);
   }
 
   /** Tries to find a suitable comment prefix for the string data at the given
@@ -417,12 +450,12 @@ public:
   /** Sets the character that should be used to escape comment prefixes.
    * Default is '\'.
    * @param esc escape character to be used. */
-  void setEscapeChar(const char esc) { esc_ = esc; }
+  void set_escape_char(const char esc) { esc_ = esc; }
 
   /** Sets whether or not to parse multi-line field values.
    * Default is false.
    * @param enable enable or disable? */
-  void setMultiLineValues(bool enable) { multiLineValues_ = enable; }
+  void set_multiline_values(bool enable) { multiLineValues_ = enable; }
 
   /** Tries to decode a ini file from the given input stream.
    * @param is input stream from which data should be read. */
@@ -435,7 +468,7 @@ public:
     // iterate file line by line
     while (!is.eof() && !is.fail()) {
       std::getline(is, line, '\n');
-      eraseComments(line);
+      erase_comments(line);
       bool hasIndent = line.find_first_not_of(indents()) != 0;
       trim(line);
       ++lineNo;
