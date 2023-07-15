@@ -56,7 +56,7 @@ Finally, run the app in the background with `nohup` and `tee` :
 
 ```bash
 # Runs the app in the background
-./bin/main 2>&1 | tee -a .log &
+nohup ./bin/main run 2>&1 | tee -a .log &
 ```
 
 or in the foreground :
