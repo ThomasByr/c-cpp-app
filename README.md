@@ -28,7 +28,7 @@ Like this template ? We have other templates ready for you ⭐ !
 
 ## ✏️ Setup
 
-This repository is a template for a C/C++ app. It is meant to be used as a starting point for any python app. As such, this document is not meant to be _entirely_ read as is, but rather to be used as a base for your own documentation. Nevertheless, you can still find usefull information here since it is a great way to see how the template is used. You will still need to do some (minor) work when using this template - like changing the name of the app, the name of the author, etc. - but it should be fairly easy to do.
+This repository is a template for a C/C++ app. It is meant to be used as a starting point for any app. As such, this document is not meant to be _entirely_ read as is, but rather to be used as a base for your own documentation. Nevertheless, you can still find usefull information here since it is a great way to see how the template is used. You will still need to do some (minor) work when using this template - like changing the name of the app, the name of the author, etc. - but it should be fairly easy to do.
 
 > <picture>
 >   <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/Mqxx/GitHub-Markdown/main/blockquotes/badge/light-theme/info.svg">
