@@ -18,6 +18,9 @@ SRCDIR       = src
 OBJDIR       = obj
 BINDIR       = bin
 
+## performance settings [leave blank if not needed]
+NUM_WORKERS  = $(shell expr $(shell nproc) + 1)
+
 ## collections [do not modify]
 
 SRCSUBDIRS  := $(shell find $(SRCDIR) -type d)
@@ -28,12 +31,12 @@ INCLUDES    := $(foreach dir, $(INCSUBDIRS), $(wildcard $(dir)/*.h|*.hpp))
 LIBS        := $(wildcard $(LIB_PATH)/*.h|*.hpp)
 OBJECTS0    := $(addprefix $(OBJDIR)/, $(SOURCES:$(SRCDIR)/%.$(FILEXT)=%.o))
 
-LEXSRC      := $(wildcard $(LEXYACC_PATH)/*.l)
-YACCSRC     := $(wildcard $(LEXYACC_PATH)/*.y)
-LEXC        := $(LEXSRC:$(LEXYACC_PATH)/%.l=$(SRCDIR)/%.c)
-YACCC       := $(YACCSRC:$(LEXYACC_PATH)/%.y=$(SRCDIR)/%.c)
-LEXOBJ      := $(LEXSRC:$(LEXYACC_PATH)/%.l=$(OBJDIR)/%.o)
-YACCOBJ     := $(YACCSRC:$(LEXYACC_PATH)/%.y=$(OBJDIR)/%.o)
+LEXSRC      := $(wildcard $(LEXYACC_PATH)/*.l|*.ll)
+YACCSRC     := $(wildcard $(LEXYACC_PATH)/*.y|*.yy)
+LEXC        := $(LEXSRC:$(LEXYACC_PATH)/%.l=$(SRCDIR)/%.c) $(LEXSRC:$(LEXYACC_PATH)/%.ll=$(SRCDIR)/%.cpp)
+YACCC       := $(YACCSRC:$(LEXYACC_PATH)/%.y=$(SRCDIR)/%.c) $(YACCSRC:$(LEXYACC_PATH)/%.yy=$(SRCDIR)/%.cpp)
+LEXOBJ      := $(LEXSRC:$(LEXYACC_PATH)/%.l=$(OBJDIR)/%.o) $(LEXSRC:$(LEXYACC_PATH)/%.ll=$(OBJDIR)/%.o)
+YACCOBJ     := $(YACCSRC:$(LEXYACC_PATH)/%.y=$(OBJDIR)/%.o) $(YACCSRC:$(LEXYACC_PATH)/%.yy=$(OBJDIR)/%.o)
 
 OBJECTS      = $(filter-out $(LEXOBJ) $(YACCOBJ), $(OBJECTS0))
 
@@ -65,15 +68,15 @@ format:
 
 debug: CFLAGS += -Og -DDEBUG -g -ggdb -DYYDEBUG
 debug: YFLAGS += -v
-debug: $(PATH_TO_EXE)
+debug: __maybe_multi_worker_target
 	@echo "\033[93mRunning in debug mode!\033[0m"
 
 release: CFLAGS += -march=native -O2
-release: $(PATH_TO_EXE)
+release: __maybe_multi_worker_target
 	@echo "\033[96mRunning in release mode!\033[0m"
 
 generic: CFLAGS += -march=x86-64 -O2
-generic: $(PATH_TO_EXE)
+generic: __maybe_multi_worker_target
 	@echo "\033[95mRunning in generic mode!\033[0m"
 
 run:
@@ -89,6 +92,14 @@ run-release: release
 run-debug: debug
 	valgrind --leak-check=full --show-leak-kinds=all --vgdb=full -s ./$(LAUNCH_CMD)
 
+__maybe_multi_worker_target:
+ifneq ($(NUM_WORKERS),)
+	@echo "\033[94mBuilding with up to $(NUM_WORKERS) workers...\033[0m"
+	@$(MAKE) -j $(NUM_WORKERS) $(PATH_TO_EXE)
+else
+	@echo "\033[94mBuilding with one worker...\033[0m"
+	@$(MAKE) --no-print-directory $(PATH_TO_EXE)
+endif
 
 $(LEXC):
 	flex -o $@ $(LEXSRC)
@@ -119,4 +130,4 @@ clean:
 	rm -rf $(OBJDIR)/*
 	rm -f $(PATH_TO_EXE)
 	rm -f $(LEXC)
-	rm -f $(YACCC) $(YACCC:.c=.h) $(YACCC:.c=.output)
+	rm -f $(YACCC) $(YACCC:.c=.h) $(YACCC:.cpp=.h) $(YACCC:.c=.output) $(YACCC:.cpp=.output)
