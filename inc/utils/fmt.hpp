@@ -81,7 +81,7 @@ template <typename... Args>
   using namespace std;
   using namespace internal;
   cerr << FG_RED << "   panic " << RST << format(fmt, args...) << endl;
-  cerr << FG_RED << "      -> " << RST << format(strerror(errno)) << endl;
+  cerr << FG_RED << "      -> " << RST << strerror(errno) << endl;
   abort();
 }
 
