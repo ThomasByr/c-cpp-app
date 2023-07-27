@@ -18,8 +18,15 @@ SRCDIR       = src
 OBJDIR       = obj
 BINDIR       = bin
 
-## performance settings [leave blank if not needed]
-NUM_WORKERS  = $(shell expr $(shell nproc) + 1)
+PARALLEL     = yes
+
+## performance settings [do not modify]
+
+DEVICE_NUMW  = $(shell expr $(shell nproc) + 1)
+NUM_WORKERS  = $(shell echo $(MAKEFLAGS) | grep -oP '(?<=-j)\d+' || echo $(DEVICE_NUMW))
+ifneq ($(PARALLEL), yes)
+override NUM_WORKERS =
+endif
 
 ## collections [do not modify]
 
